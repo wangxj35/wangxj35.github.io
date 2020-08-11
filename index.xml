@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>wangxj35&#39;s Blog</title>
-    <link>https://wangxj35.github.io/</link>
-    <description>Recent content on wangxj35&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-	<atom:link href="https://wangxj35.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title></title>
-      <link>https://wangxj35.github.io/post/hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangxj35.github.io/post/hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
-      <description>Hugo+Github搭建博客及使用
+	<channel>
+		<title>wangxj35&#39;s Blog on wangxj35&#39;s Blog</title>
+		<link>https://wangxj35.github.io/</link>
+		<description>Recent content in wangxj35&#39;s Blog </description>
+		<generator>Hugo -- gohugo.io</generator>
+		
+  		<language>en-us</language>
+		
+		<managingEditor>Page(&#34;wangxj35&#39;s Blog&#34;)</managingEditor>
+    	
+		<atom:link href="/" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title></title>
+			<link>https://wangxj35.github.io/post/hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			<guid>https://wangxj35.github.io/post/hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+			<description>Hugo+Github搭建博客及使用
 Github操作：
  注册一个github账号并登录，地址： https://github.com/ 新建一个github repository, 库名为username.github.io  Hugo操作：
   安装hugo, 参考官方教程：https://gohugo.io/getting-started/installing
@@ -32,19 +32,18 @@ cd themes *#* *进入”themes“目录*
 git clone https://github.com/matsuyoshi30/harbor.git harbor *# 将Harbor主题克隆至”harbor“目录。*
   编辑配置文件，在Hugo网站文件夹的根目录下，编辑config.toml文件
 baseURL = &amp;quot;https://username.github.io/&amp;quot; # username替换为自己的博客名字 languageCode = &amp;quot;en-us&amp;quot; title = &amp;quot;wangxj35&#39;s Blog&amp;quot; theme = &amp;quot;simple-blog&amp;quot;</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://wangxj35.github.io/post/readme/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://wangxj35.github.io/post/readme/</guid>
-      <description>This directory (and version of CentOS) is deprecated. For normal users, you should use /7/ and not /7.5.1804/ in your path. Please see this FAQ concerning the CentOS release scheme:
+		</item>
+      	
+		<item>
+			<title></title>
+			<link>https://wangxj35.github.io/post/readme/</link>
+			<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+			<guid>https://wangxj35.github.io/post/readme/</guid>
+			<description>This directory (and version of CentOS) is deprecated. For normal users, you should use /7/ and not /7.5.1804/ in your path. Please see this FAQ concerning the CentOS release scheme:
 https://wiki.centos.org/FAQ/General
 If you know what you are doing, and absolutely want to remain at the 7.5.1804 level, go to http://vault.centos.org/ for packages.
 Please keep in mind that 7.5.1804 no longer gets any updates, nor any security fix&amp;rsquo;s.</description>
-    </item>
-    
-  </channel>
+		</item>
+      	
+	</channel>
 </rss>
