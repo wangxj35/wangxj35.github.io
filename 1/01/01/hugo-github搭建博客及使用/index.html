@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<title></title>
+
+
+  
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="alternate" type="application/rss+xml" href="https://wangxj35.github.io/index.xml" title="wangxj35&#39;s Blog">
+
+<link id="dark-mode-theme" rel="stylesheet" href="https://wangxj35.github.io/css/dark.css" />
+<link rel="stylesheet" href="https://wangxj35.github.io/fontawesome/css/all.min.css" />
+
+<script src="https://wangxj35.github.io/js/bundle.js"></script>
+<script src="https://wangxj35.github.io/js/instantpage.js" type="module" defer></script>
+<meta name="generator" content="Hugo 0.74.2" />
+  </head>
+  <body>
+    
+  
+
+
+
+
+  <div class="intro-header"></div>
+
+
+    
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      
+    <h1 id="hugogithub搭建博客及使用">Hugo+Github搭建博客及使用</h1>
+<p>Github操作：</p>
+<ol>
+<li>注册一个github账号并登录，地址： <a href="https://github.com/">https://github.com/</a></li>
+<li>新建一个github repository, 库名为<em>username</em>.github.io</li>
+</ol>
+<p>Hugo操作：</p>
+<ol>
+<li>
+<p>安装hugo, 参考官方教程：https://gohugo.io/getting-started/installing</p>
+<p>windows安装：直接下载最新版的exe文件，下载地址： <a href="https://github.com/gohugoio/hugo/releases">https://github.com/gohugoio/hugo/releases</a> ，将可执行文件设置成环境变量，可百度一下windows设置环境变量方法。</p>
+</li>
+<li>
+<p>安装完成后，打开cmd, 输入以下命令确认hugo版本。</p>
+<p><code>hugo version</code></p>
+</li>
+<li>
+<p>新建一个Hugo网站，进入存放Hugo网站文件夹的目录，比如：F:\hugo，执行以下命令新建一个Hugo网站。</p>
+<p><code>hugo new site blog</code></p>
+</li>
+<li>
+<p>选择Hugo主题并克隆至本地目录，地址：https://themes.gohugo.io, 将所选主题克隆至本地目录，方法如下：</p>
+<p><code>cd F:\hugo\blog   *#* *进入网站目录*</code></p>
+<p><code>mkdir themes    *#* *创建“themes”目录*</code></p>
+<p><code>cd themes   *#* *进入”themes“目录*</code></p>
+<p><code>git clone  https://github.com/matsuyoshi30/harbor.git  harbor  *# 将Harbor主题克隆至”harbor“目录。*</code></p>
+</li>
+<li>
+<p>编辑配置文件，在Hugo网站文件夹的根目录下，编辑config.toml文件</p>
+<p><code>baseURL = &quot;https://username.github.io/&quot;</code>  # username替换为自己的博客名字
+<code>languageCode = &quot;en-us&quot;</code>
+<code>title = &quot;wangxj35's Blog&quot;</code>
+<code>theme = &quot;simple-blog&quot;</code></p>
+</li>
+<li>
+<p>重新生成静态博客</p>
+<p><code>hugo -t=we -D</code></p>
+</li>
+<li>
+<p>上传public内的文件到username.github.io项目</p>
+<p><code>cd F:\hugo\blog\public</code></p>
+<p><code>git init</code></p>
+<p><code>git add .</code></p>
+<p><code>git commit -m &quot;first init blog&quot;</code></p>
+<p><code>git remote add origin git@github.com:username/username.github.io.git</code></p>
+<p><code>git push -u origin master</code></p>
+</li>
+</ol>
+<p>新建一篇文章：</p>
+<ol>
+<li>
+<p>进入网站文件夹的根目录</p>
+<p><code>cd F:\hugo\blog</code></p>
+</li>
+<li>
+<p>使用以下命令新建一篇文章</p>
+<p>hugo new post/my-first-post.md</p>
+</li>
+<li>
+<p>编辑新建的文章，添加内容并保存。</p>
+<p><code>hugo -t=we -D</code></p>
+</li>
+<li>
+<p>进入F:\hugo\blog\public目录，将文章推送到github, 命令如下：</p>
+<p><code>cd public</code></p>
+<p><code>git add -A</code></p>
+<p><code>git commit -m &quot;add my-first-post.md&quot;</code></p>
+<p><code>git push -u origin master</code></p>
+<p><code>cd ..</code></p>
+</li>
+</ol>
+<p>本地预览网站效果：</p>
+<ol>
+<li>
+<p>打开cmd, 启动Hugo server</p>
+<p><code>hugo server -D</code></p>
+</li>
+<li>
+<p>使用浏览器打开http://localhost:1313预览。</p>
+</li>
+</ol>
+
+
+
+      
+    </article>
+    
+    
+  </div>
+
+    <footer>
+  <div class="container">
+    <p class="credits copyright">
+      <a href="https://wangxj35.github.io/about">wangxj35</a>
+      &nbsp;&copy;
+      0001
+
+      
+        &nbsp;/&nbsp;
+        <a href="https://wangxj35.github.io/">wangxj35&#39;s Blog</a>
+      
+
+      &nbsp;&ndash;&nbsp;
+      <i class="fas fa-moon" id="dark-mode-toggle"></i>
+
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;Theme <a href="https://github.com/matsuyoshi30/harbor">Harbor</a>
+      </p>
+    </p>
+  </div>
+</footer>
+
+  </body>
+</html>
