@@ -4,14 +4,14 @@
 
 
 
-Github操作：
+## Github操作：
 
 1. 注册一个github账号并登录，地址： https://github.com/ 
 2. 新建一个github repository, 库名为*username*.github.io
 
 
 
-Hugo操作：
+## Hugo操作：
 
 1. 安装hugo, 参考官方教程：https://gohugo.io/getting-started/installing
 
@@ -64,7 +64,7 @@ Hugo操作：
 
 
 
-新建一篇文章：
+## 新建一篇文章：
 
 1. 进入网站文件夹的根目录 
 
@@ -92,7 +92,7 @@ Hugo操作：
 
 
 
-本地预览网站效果：
+## 本地预览网站效果：
 
 1. 打开cmd, 启动Hugo server
 
@@ -102,6 +102,6 @@ Hugo操作：
 
 
 
-打开网页预览效果：
+## 打开网页预览效果：
 
  https://wangxj35.github.io/ 

@@ -2,10 +2,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://wangxj35.github.io/zh-cn/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://wangxj35.github.io/post/hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E4%BD%BF%E7%94%A8/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://wangxj35.github.io/post/readme/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://wangxj35.github.io/categories/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
-                        href="https://wangxj35.github.io/categories/"
+                        href="https://wangxj35.github.io/en/categories/"
                         /><xhtml:link
                         rel="alternate"
                         hreflang="fr"
@@ -13,12 +15,13 @@
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
-                    href="https://wangxj35.github.io/zh-cn/categories/"
+                    href="https://wangxj35.github.io/categories/"
                     /></url><url>
-            <loc>https://wangxj35.github.io/zh-cn/tags/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://wangxj35.github.io/post/</loc><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://wangxj35.github.io/tags/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
-                        href="https://wangxj35.github.io/tags/"
+                        href="https://wangxj35.github.io/en/tags/"
                         /><xhtml:link
                         rel="alternate"
                         hreflang="fr"
@@ -26,12 +29,12 @@
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
-                    href="https://wangxj35.github.io/zh-cn/tags/"
+                    href="https://wangxj35.github.io/tags/"
                     /></url><url>
-            <loc>https://wangxj35.github.io/zh-cn/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://wangxj35.github.io/</loc><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
-                        href="https://wangxj35.github.io/"
+                        href="https://wangxj35.github.io/en/"
                         /><xhtml:link
                         rel="alternate"
                         hreflang="fr"
@@ -39,5 +42,5 @@
                         /><xhtml:link
                     rel="alternate"
                     hreflang="zh-cn"
-                    href="https://wangxj35.github.io/zh-cn/"
+                    href="https://wangxj35.github.io/"
                     /></url></urlset>
