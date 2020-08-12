@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	
-	<sitemap>
-	   	<loc>https://wangxj35.github.io/en/sitemap.xml</loc>
-		
-	</sitemap>
-	
-	<sitemap>
-	   	<loc>https://wangxj35.github.io/zh-cn/sitemap.xml</loc>
-		
-	</sitemap>
-	
-	<sitemap>
-	   	<loc>https://wangxj35.github.io/fr/sitemap.xml</loc>
-		
-	</sitemap>
-	
-</sitemapindex>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://wangxj35.github.io/post/hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E4%BD%BF%E7%94%A8/</loc>
+  </url>
+  
+  <url>
+    <loc>https://wangxj35.github.io/post/readme/</loc>
+  </url>
+  
+  <url>
+    <loc>https://wangxj35.github.io/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://wangxj35.github.io/post/</loc>
+  </url>
+  
+  <url>
+    <loc>https://wangxj35.github.io/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://wangxj35.github.io/</loc>
+  </url>
+  
+</urlset>
