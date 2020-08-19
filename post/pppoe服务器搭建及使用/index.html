@@ -125,23 +125,22 @@
 
     <div align="start" class="content"><h1 id="服务器端配置">服务器端配置：</h1>
 <p>安装rp-pppoe软件，修改配置文件/etc/ppp/pppoe-server-options，内容如下：</p>
-<h6 id="ppp-options-for-the-pppoe-server">PPP options for the PPPoE server</h6>
-<h6 id="lic-gpl">LIC: GPL</h6>
-<p>require-pap
-#login
-lcp-echo-interval 10
-lcp-echo-failure 2
-ms-dns 10.96.1.18</p>
+<p>#PPP options for the PPPoE server</p>
+<p>#LIC: GPL</p>
+<p>require-pap</p>
+<p>#login</p>
+<p>lcp-echo-interval 10</p>
+<p>lcp-echo-failure 2</p>
+<p>ms-dns 10.96.1.18</p>
 <p>因为上面指定了pap认证，修改/etc/ppp/pap-secrets内容如下：</p>
-<h6 id="secrets-for-authentication-using-pap">Secrets for authentication using PAP</h6>
-<h6 id="client--------server--secret------------------ip-addresses">client        server  secret                  IP addresses</h6>
-<p>&ldquo;wangxj35&rdquo;       *       &ldquo;public&rdquo;                *</p>
+<p>Secrets for authentication using PAP</p>
+<p>client           server   secret                   IP addresses</p>
+<p>&ldquo;wangxj35&rdquo;     *          &ldquo;public&rdquo;                *</p>
 <p>同时需要再系统中添加wangxj35的用户：useradd wangxj35; passwd wangxj35</p>
 <p>然后启动服务：</p>
 <p>pppoe-server -I ens3 -L 192.168.111.1 -R 192.168.111.100 -N 10  (192.168.111就是拨号的网段了)</p>
 <h1 id="客户端配置">客户端配置：</h1>
 <p>修改客户端网卡配置中的启动协议  BOOTPROTO=dailup</p>
-<p><img src="C:%5CUsers%5Cwangxj35%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1597816045279.png" alt="1597816045279"></p>
 <p>安装rp-pppoe软件，配置如下：</p>
 <p>pppoe-setup</p>
 <p>当出现</p>

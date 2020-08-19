@@ -18,9 +18,17 @@
       
       <guid>https://wangxj35.github.io/post/pppoe%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
       <description>服务器端配置： 安装rp-pppoe软件，修改配置文件/etc/ppp/pppoe-server-options，内容如下：
-PPP options for the PPPoE server LIC: GPL require-pap #login lcp-echo-interval 10 lcp-echo-failure 2 ms-dns 10.96.1.18
+#PPP options for the PPPoE server
+#LIC: GPL
+require-pap
+#login
+lcp-echo-interval 10
+lcp-echo-failure 2
+ms-dns 10.96.1.18
 因为上面指定了pap认证，修改/etc/ppp/pap-secrets内容如下：
-Secrets for authentication using PAP client server secret IP addresses &amp;ldquo;wangxj35&amp;rdquo; * &amp;ldquo;public&amp;rdquo; *
+Secrets for authentication using PAP
+client server secret IP addresses
+&amp;ldquo;wangxj35&amp;rdquo; * &amp;ldquo;public&amp;rdquo; *
 同时需要再系统中添加wangxj35的用户：useradd wangxj35; passwd wangxj35
 然后启动服务：
 pppoe-server -I ens3 -L 192.168.111.1 -R 192.168.111.100 -N 10 (192.168.111就是拨号的网段了)
