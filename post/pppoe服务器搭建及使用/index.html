@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Pppoe服务器搭建及使用</title>
+        
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: black;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="https://wangxj35.github.io/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.74.2" />
+        
+
+        
+
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+
+    </head>
+
+    <body>
+        
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="#">Pppoe服务器搭建及使用</a>
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                        </ul>
+                    
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="https://github.com/wangxj35/"><i class="fa fa-github"></i></a></li>
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </nav>
+
+
+<main>
+
+    <div>
+        <h2>Pppoe服务器搭建及使用</h2>
+        <h5>August 19, 2020</h5>
+        
+
+    </div>
+
+    <div align="start" class="content"><h1 id="服务器端配置">服务器端配置：</h1>
+<p>安装rp-pppoe软件，修改配置文件/etc/ppp/pppoe-server-options，内容如下：</p>
+<h6 id="ppp-options-for-the-pppoe-server">PPP options for the PPPoE server</h6>
+<h6 id="lic-gpl">LIC: GPL</h6>
+<p>require-pap
+#login
+lcp-echo-interval 10
+lcp-echo-failure 2
+ms-dns 10.96.1.18</p>
+<p>因为上面指定了pap认证，修改/etc/ppp/pap-secrets内容如下：</p>
+<h6 id="secrets-for-authentication-using-pap">Secrets for authentication using PAP</h6>
+<h6 id="client--------server--secret------------------ip-addresses">client        server  secret                  IP addresses</h6>
+<p>&ldquo;wangxj35&rdquo;       *       &ldquo;public&rdquo;                *</p>
+<p>同时需要再系统中添加wangxj35的用户：useradd wangxj35; passwd wangxj35</p>
+<p>然后启动服务：</p>
+<p>pppoe-server -I ens3 -L 192.168.111.1 -R 192.168.111.100 -N 10  (192.168.111就是拨号的网段了)</p>
+<h1 id="客户端配置">客户端配置：</h1>
+<p>修改客户端网卡配置中的启动协议  BOOTPROTO=dailup</p>
+<p><img src="C:%5CUsers%5Cwangxj35%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1597816045279.png" alt="1597816045279"></p>
+<p>安装rp-pppoe软件，配置如下：</p>
+<p>pppoe-setup</p>
+<p>当出现</p>
+<p>&gt;&gt;&gt; Enter your PPPoE user name:</p>
+<p>输入ADSL账号的用户名     wangxj35</p>
+<p>当出现</p>
+<p>&gt;&gt;&gt; Enter the Ethernet interface connected to the ADSL modem</p>
+<p>For Solaris, this is likely to be something like /dev/hme0.</p>
+<p>For Linux, it will be ethn, where &lsquo;n&rsquo; is a number.</p>
+<p>(default eth0):</p>
+<p>输入  ens3              #这是ADSL相连的网卡的名字</p>
+<p>当出现</p>
+<p>&gt;&gt;&gt; Enter the demand values (default no):</p>
+<p>输入 no</p>
+<p>当出现</p>
+<p>&gt;&gt;&gt; Enter the DNS inFORMation here:</p>
+<p>输入server即可；    （静态IP时，输入相应的DNS服务器IP地址，一般有2个）</p>
+<p>当出现</p>
+<p>&gt;&gt;&gt; Please enter your PPPoE password:</p>
+<p>输入ADSL账号的密码   public</p>
+<p>当出现</p>
+<p>&gt;&gt;&gt; Choose a type of firewalld (0-2):</p>
+<p>输入1， 使用标准防火墙</p>
+<p>当出现</p>
+<p>&gt;&gt;&gt; Accept these settings and adjust configuration files (y/n) ?</p>
+<p>如果输入的信息正确，输入 y，完成配置，否则，输入 n 重新输入。</p>
+<p>使用：</p>
+<p>拨号  pppoe-start</p>
+<p>断开  pppoe-stop</p>
+<p>查看  pppoe-status</p>
+<p>如果客户端想要上网，那么需要服务器端配置以下：</p>
+<p>echo &ldquo;1&rdquo; &gt;&gt; /proc/sys/net/ipv4/ip_forward</p>
+<p>iptables -t nat -A POSTROUTING -s 192.168.111.0/24 -o ens3 -j SNAT &ndash;to 172.16.33.25</p>
+<p>​      第一行的作用是启用IP转发，第二行是启动IPTABLES进行NAT转换，下面是对各个参数的解释</p>
+<p>​      -t   nat表示进行NAT转换</p>
+<p>​      -s  192.168.111.0/24 表示源地址为192.168.111.0/24这个网段</p>
+<p>​      -j   SNAT &ndash;to 172.16.33.25表示将源地址都转化成172.16.33.25这个外网地址</p>
+<p>​      同样的，我们可以对照routeros系统里NAT的设置来理解这条命令。启动NAT以后，这台PPPOE服务器就功能完整了，客户端不仅可以拨通服务器，拨通后还可以上网。</p>
+</div>
+
+    
+    
+    
+
+    
+    
+        <h4 class="page-header">Comments</h4>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "username" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+</main>
+
+        <footer>
+            <p class="copyright text-muted">© All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a>.</p>
+        </footer>
+
+        
+
+        
+    </body>
+
+</html>
+
