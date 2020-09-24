@@ -6,10 +6,23 @@
     <description>Recent content in Posts on wangxj35&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 19 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 24 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://wangxj35.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux设置挂载盘开机自动挂载</title>
+      <link>https://wangxj35.github.io/post/linux%E8%AE%BE%E7%BD%AE%E6%8C%82%E8%BD%BD%E7%9B%98%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD/</link>
+      <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangxj35.github.io/post/linux%E8%AE%BE%E7%BD%AE%E6%8C%82%E8%BD%BD%E7%9B%98%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD/</guid>
+      <description>方法1：
+把mount 的命令放到/etc/rc.d/rc.local 里面去，vi /etc/rc.d/rc.local ，然后把 mount /dev/vdb1 /var/lib/docker 这个命令写进去。保存退出就好了。
+方法2：
+修改/etc/fstab文档
+ /etc/fstab Created by anaconda on Wed Sep 23 17:35:36 2020  Accessible filesystems, by reference, are maintained under &amp;lsquo;/dev/disk&amp;rsquo; See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info  /dev/mapper/centos-root / xfs defaults 0 0 UUID=c6af196a-f316-44c1-a772-8386727e3ca5 /boot xfs defaults 0 0 /dev/mapper/centos-swap swap swap defaults 0 0 /dev/vdb1 /var/lib/docker xfs defaults 0 0 /dev/vdb2 /var/log xfs defaults 0 0</description>
+    </item>
     
     <item>
       <title>Pppoe服务器搭建及使用</title>
