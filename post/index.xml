@@ -12,6 +12,30 @@
     
     
     <item>
+      <title>Linux(CentOS)搭建nfs服务器</title>
+      <link>https://wangxj35.github.io/post/linux%E6%90%AD%E5%BB%BAnfs%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+      <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangxj35.github.io/post/linux%E6%90%AD%E5%BB%BAnfs%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+      <description>服务器端：
+第一步：CentOS7.5通过yum安装 nfs-utils 和 rpcbind
+[root@localhost~]#yum install -y nfs-utils
+[root@localhost~]#yum install -y rpcbind
+第二步：启动服务和设置开机启动（先启动rpc服务，再启动nfs服务）
+[root@localhost~]#systemctl start rpcbind
+[root@localhost~]#systemctl enable rpcbind
+[root@localhost~]#systemctl start nfs nfs-secure
+[root@localhost~]#systemctl enable nfs nfs-secure
+第三步：配置共享文件目录，编辑配置文件/etc/exports
+[root@localhost~]#vi /etc/exports
+​ /nfsdata *(rw,no_root_squash,no_all_squash,sync)
+[root@localhost~]#systemctl reload nfs
+#重新加载NFS服务，使配置生效
+配置文件参数详解：
+   参数 作用     ro 只读   rw 读写   root_squash 当NFS客户端以root管理员访问时，映射为NFS服务器的匿名用户   no_root_squash 当NFS客户端以root管理员访问时，映射为NFS服务器的root管理员   all_squash 无论NFS客户端使用什么账户访问，均映射为NFS服务器的匿名用户   sync 同时将数据写入到内存与硬盘中，保证不丢失数据   async 优先将数据保存到内存，然后再写入硬盘；这样效率更高，但可能会丢失数据    客户端挂载：</description>
+    </item>
+    
+    <item>
       <title>Linux设置挂载盘开机自动挂载</title>
       <link>https://wangxj35.github.io/post/linux%E8%AE%BE%E7%BD%AE%E6%8C%82%E8%BD%BD%E7%9B%98%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD/</link>
       <pubDate>Thu, 24 Sep 2020 00:00:00 +0000</pubDate>
