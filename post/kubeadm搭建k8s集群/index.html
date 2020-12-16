@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+        
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: black;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="https://wangxj35.github.io/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.74.2" />
+        
+
+        
+
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+
+    </head>
+
+    <body>
+        
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="#"></a>
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                        </ul>
+                    
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="https://github.com/wangxj35/"><i class="fa fa-github"></i></a></li>
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </nav>
+
+
+<main>
+
+    <div>
+        <h2></h2>
+        <h5>January 1, 0001</h5>
+        
+
+    </div>
+
+    <div align="start" class="content"><h1 id="kubeadm搭建k8s集群">kubeadm搭建k8s集群</h1>
+<h2 id="准备工作">准备工作：</h2>
+<ol>
+<li>
+<p>准备3个节点，安装centos7.5</p>
+</li>
+<li>
+<p>关闭防火墙和selinux</p>
+<pre><code>#systemctl stop firewalld &amp;&amp; systemctl disable firewalld
+   
+#sed -i 's/enforcing/disabled/' /etc/selinux/config  # 永久
+#setenforce 0  # 临时
+</code></pre></li>
+<li>
+<p>设置主机名为node1, node2, node3</p>
+<pre><code>#hostnamectl set-hostname node1
+   
+#hostnamectl set-hostname node2
+   
+#hostnamectl set-hostname node3
+</code></pre></li>
+<li>
+<p>关闭swap分区</p>
+<pre><code>#swapoff -a  #临时
+   
+#vi /etc/fstab  #注释swap分区行，永久关闭
+</code></pre></li>
+<li>
+<p>node1节点生成秘钥，并配置hosts与其他节点互信</p>
+<pre><code>#cat  &gt;&gt; /etc/hosts &lt;&lt; EOF
+   
+10.121.121.5 node1
+   
+10.121.121.6 node2
+   
+10.121.121.9 node3
+   
+EOF
+   
+#ssh-keygen  (一路回车，默认)
+   
+#ssh-copy-id -i /root/.ssh/id_rsa.pub node1
+   
+#ssh-copy-id -i /root/.ssh/id_rsa.pub node2
+   
+#ssh-copy-id -i /root/.ssh/id_rsa.pub node3
+</code></pre></li>
+</ol>
+<h2 id="安装时钟同步软件chrony">安装时钟同步软件chrony:</h2>
+<p>#yum install chrony -y</p>
+<p>node1作为chrony server端，配置文件 /etc/chrony.conf 如下：</p>
+<hr>
+<pre><code>server 10.121.121.5 iburst     #本地时钟同步
+
+server 0.centos.pool.ntp.org iburst   #与互联网时钟同步
+
+driftfile /var/lib/chrony/drift
+
+makestep 1.0 3
+
+rtcsync
+
+allow 10.121.0.0/16
+
+logdir /var/log/chrony
+</code></pre><p>node2, node3作为chrony client端，配置文件 /etc/chrony.conf 如下：</p>
+<hr>
+<pre><code>server 10.121.121.5 iburst    #本地时钟同步
+
+server 0.centos.pool.ntp.org iburst   #与互联网时钟同步
+
+driftfile /var/lib/chrony/drift
+
+makestep 1.0 3
+
+rtcsync
+
+logdir /var/log/chrony
+</code></pre><p>#chronyc tracking    #查看时钟同步状态</p>
+<h2 id="安装docker">安装docker</h2>
+<p>参考链接：https://kubernetes.io/zh/docs/setup/production-environment/container-runtimes/</p>
+<p>#yum install -y yum-utils device-mapper-persistent-data lvm2   #设置仓库，安装所需软件包</p>
+<p>#新增docker仓库</p>
+<p>官方源</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">yum-config-manager --add-repo <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></div><p>aliyun源</p>
+<pre><code>wget http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</code></pre><p>#安装docker</p>
+<pre><code>yum install docker-ce -y
+systemctl start docker &amp;&amp; systemctl enable docker
+</code></pre><p>#配置镜像下载加速器</p>
+<pre><code>cat &gt;&gt; /etc/docker/daemon.json &lt;&lt; EOF
+{
+  &quot;registry-mirrors&quot;: [&quot;https://b9pmyelo.mirror.aliyuncs.com&quot;]
+}
+EOF
+
+#systemctl restart docker
+</code></pre><h2 id="安装kubeadm-kubelet-kubectl">安装kubeadm, kubelet, kubectl</h2>
+<p>参考链接：https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/</p>
+<p>#配置kubernetes源</p>
+<p>官方源</p>
+<pre><code>cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+</code></pre><p>aliyun源</p>
+<pre><code>cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+</code></pre><p>#安装kubeadm, kubelet, kubectl</p>
+<pre><code>yum install -y kubeadm kubelet kubectl
+yum install -y kubeadm-1.19.0 kubelet-1.19.0 kubectl-1.19.0   #指定版本安装
+
+systemctl enable kubelet
+</code></pre><p>一些 RHEL/CentOS 7 的用户曾经遇到过问题：由于 iptables 被绕过而导致流量无法正确路由的问题。您应该确保 在 <code>sysctl</code> 配置中的 <code>net.bridge.bridge-nf-call-iptables</code> 被设置为 1。</p>
+<pre><code>cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sysctl --system
+</code></pre><h2 id="部署kubernetes-master">部署kubernetes master</h2>
+<pre><code>kubeadm init \
+--apiserver-advertise-address=172.16.0.223 \
+--image-repository registry.cn-hangzhou.aliyuncs.com/google_containers \
+--kubernetes-version v1.19.0 \
+--pod-network-cidr=10.244.0.0/16 \
+--service-cidr=10.96.0.0/12 \
+--ignore-preflight-errors=all
+</code></pre><p>拷贝kubectl使用的连接k8s认证文件到默认路径：</p>
+<pre><code>mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre><h2 id="加入kubernetes-node">加入kubernetes node</h2>
+<pre><code>kubeadm join 172.16.0.223:6443 --token z7k7gc.8egumy4qbep56uow \
+    --discovery-token-ca-cert-hash sha256:fca43821e453e96c8dc89486bbdbb5d37e5477a6b5fa94744035dbc126bb8b72   #kubeadm init的输出信息中可以找到加入集群的指令
+</code></pre><h2 id="部署容器网络calico">部署容器网络calico</h2>
+<p><a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network">https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/#pod-network</a></p>
+<p>注意：只需要部署下面其中一个，推荐Calico。</p>
+<p>Calico是一个纯三层的数据中心网络方案，Calico支持广泛的平台，包括Kubernetes、OpenStack等。</p>
+<p>Calico 在每一个计算节点利用 Linux Kernel 实现了一个高效的虚拟路由器（ vRouter） 来负责数据转发，而每个 vRouter 通过 BGP 协议负责把自己上运行的 workload 的路由信息向整个 Calico 网络内传播。</p>
+<p>此外，Calico  项目还实现了 Kubernetes 网络策略，提供ACL功能。</p>
+<p><a href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart">https://docs.projectcalico.org/getting-started/kubernetes/quickstart</a></p>
+<pre><code>wget https://docs.projectcalico.org/manifests/calico.yaml
+</code></pre><p>下载完后还需要修改里面定义Pod网络（CALICO_IPV4POOL_CIDR），与前面kubeadm init指定的一样</p>
+<p>修改完后应用清单：</p>
+<pre><code>kubectl apply -f calico.yaml
+kubectl get node
+kubectl get pod --all-namespaces
+</code></pre><h2 id="部署-dashboard">部署 Dashboard</h2>
+<pre><code>$ wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.3/aio/deploy/recommended.yaml
+</code></pre><p>默认Dashboard只能集群内部访问，修改Service为NodePort类型，暴露到外部：</p>
+<pre><code>$ vi recommended.yaml
+...
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  ports:
+    - port: 443
+      targetPort: 8443
+      nodePort: 30001
+  selector:
+    k8s-app: kubernetes-dashboard
+  type: NodePort
+...
+$ kubectl apply -f recommended.yaml
+$ kubectl get pods -n kubernetes-dashboard
+NAME                                         READY   STATUS    RESTARTS   AGE
+dashboard-metrics-scraper-6b4884c9d5-gl8nr   1/1     Running   0          13m
+kubernetes-dashboard-7f99b75bf4-89cds        1/1     Running   0          13m
+</code></pre><p>访问地址：https://NodeIP:30001</p>
+<p>创建service account并绑定默认cluster-admin管理员集群角色：</p>
+<pre><code># 创建用户
+$ kubectl create serviceaccount dashboard-admin -n kube-system
+# 用户授权
+$ kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin
+# 获取用户Token
+$ kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk '/dashboard-admin/{print $1}')
+</code></pre><p>使用输出的token登录Dashboard。</p>
+</div>
+
+    
+    
+    
+
+    
+    
+        <h4 class="page-header">Comments</h4>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "username" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+</main>
+
+        <footer>
+            <p class="copyright text-muted">© All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a>.</p>
+        </footer>
+
+        
+
+        
+    </body>
+
+</html>
+
