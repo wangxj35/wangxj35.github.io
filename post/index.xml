@@ -126,6 +126,16 @@ baseURL = &amp;quot;https://username.github.io/&amp;quot; # username替换为自
     
     <item>
       <title></title>
+      <link>https://wangxj35.github.io/post/nslookup%E8%A7%A3%E6%9E%90service/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangxj35.github.io/post/nslookup%E8%A7%A3%E6%9E%90service/</guid>
+      <description>nslookup解析service 题：任意名称创建deployment和service, 然后使用busybox容器nslookup解析service
+#kubectl create deployment nginx-dns --image=nginx#kubectl expose deployment nginx-dns --port=80#kubectl run busybox --image=busybox --command sleep 36000#kubectl exec -ti busybox -- nslookup nginx-dns</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://wangxj35.github.io/post/readme/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -138,12 +148,35 @@ Please keep in mind that 7.5.1804 no longer gets any updates, nor any security f
     
     <item>
       <title></title>
+      <link>https://wangxj35.github.io/post/secret%E5%88%9B%E5%BB%BA%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangxj35.github.io/post/secret%E5%88%9B%E5%BB%BA%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>secret创建及使用 题：创建一个secret, 并创建2个pod, pod1挂载该secret， 路径为/etc/foo, pod2使用环境变量引用该secret， 该变量的环境变量名为ABC
+secret名称： mysecret
+pod1名称：pod-volume-secret
+pod2名称：pod-env-secret
+#cat mysecret.yamlapiVersion: v1kind: Secretmetadata:name: mysecrettype: OpaquestringData:password: 1qaz2wsx#kubectl create secret generic mysecret --from-literal=username=admin --from-literal=password=1qaz2wsx 命令创建#cat pod1.yamlapiVersion: v1kind: Podmetadata:name: pod-volume-secretspec:containers:- name: pod-volume-secretimage: nginxvolumeMounts:- name: foomountPath: &amp;quot;/etc/foo&amp;quot;readOnly: truevolumes:- name: foosecret:secretName: mysecret#cat pod2.yamlapiVersion: v1kind: Podmetadata:name: pod-env-secretspec:containers:- name: pod-env-secretimage: nginxenv:- name: ABCvalueFrom:secretKeyRef:name: mysecretkey: passwordrestartPolicy: Never</description>
+    </item>
+    
+    <item>
+      <title></title>
       <link>https://wangxj35.github.io/post/%E5%88%97%E5%87%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8B%E6%8C%87%E5%AE%9A%E6%A0%87%E7%AD%BEpod/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://wangxj35.github.io/post/%E5%88%97%E5%87%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8B%E6%8C%87%E5%AE%9A%E6%A0%87%E7%AD%BEpod/</guid>
       <description>列出命名空间下指定标签pod 题：列出命名空间kube-system下面标签为k8s-app=kube-dns的所有pod
 #kubectl get pod -n kube-system --show-labels |grep &amp;quot;k8s-app=kube-dns&amp;quot;</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://wangxj35.github.io/post/%E5%88%97%E5%87%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8B%E6%9F%90%E4%B8%AAservice%E5%85%B3%E8%81%94%E7%9A%84%E6%89%80%E6%9C%89pod/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://wangxj35.github.io/post/%E5%88%97%E5%87%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8B%E6%9F%90%E4%B8%AAservice%E5%85%B3%E8%81%94%E7%9A%84%E6%89%80%E6%9C%89pod/</guid>
+      <description>列出命名空间下某个service关联的所有pod 题： 列出default命名空间下web service关联的所有pod, 并将pod名称写到/opt/pod.txt文件中 （使用标签筛选）
+#kubectl get svc web -o yaml或者#kubectl get svc web -o jsonpath=&#39;{.spec.slector}&#39;#kubectl get pod -l app=web -o name &amp;gt; /opt/pod.txt</description>
     </item>
     
     <item>
